@@ -1,65 +1,151 @@
-import Image from "next/image";
+'use client';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import { fallbackEvents } from '@/data/events';
+import Hero from '@/components/Hero';
+import EventCard from '@/components/EventCard';
+import { Music, Trophy, Theater, Disc, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import styles from './page.module.css';
 
 export default function Home() {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('todos');
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('events')
+          .select('*')
+          .order('fecha', { ascending: true });
+
+        if (error || !data || data.length === 0) {
+          // If Supabase fails or is empty, use fallback
+          setEvents(fallbackEvents);
+        } else {
+          setEvents(data);
+        }
+      } catch (err) {
+        console.error('Supabase query error, using fallback:', err);
+        setEvents(fallbackEvents);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  const categories = [
+    { id: 'todos', label: 'Todos', icon: Disc },
+    { id: 'conciertos', label: 'Conciertos', icon: Music },
+    { id: 'deportes', label: 'Deportes', icon: Trophy },
+    { id: 'teatro', label: 'Teatro', icon: Theater },
+    { id: 'festivales', label: 'Festivales', icon: Music },
+  ];
+
+  const filteredEvents = selectedCategory === 'todos' 
+    ? events 
+    : events.filter(e => e.categoria === selectedCategory);
+
+  const featuredEvents = events.filter(e => e.destacado);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className={styles.container}>
+      <Hero />
+
+      {/* Categories Bar */}
+      <section className={styles.categoriesSection}>
+        <div className="grid-container">
+          <h2 className={styles.sectionTitle}>Explorar por Categoría</h2>
+          <div className={styles.categoryTabs}>
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`${styles.categoryTab} glass ${selectedCategory === cat.id ? styles.activeTab : ''}`}
+                >
+                  <Icon size={20} />
+                  <span>{cat.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Featured Events */}
+      {featuredEvents.length > 0 && selectedCategory === 'todos' && (
+        <section className={styles.section}>
+          <div className="grid-container">
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Eventos Destacados</h2>
+              <span className={styles.glowIndicator}>En Tendencia</span>
+            </div>
+            
+            <div className={styles.grid}>
+              {loading ? (
+                Array(3).fill(0).map((_, idx) => <div key={idx} className={`${styles.skeletonCard} glass`}></div>)
+              ) : (
+                featuredEvents.slice(0, 3).map(event => (
+                  <EventCard key={event.id} event={event} />
+                ))
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* All / Filtered Events */}
+      <section className={styles.section}>
+        <div className="grid-container">
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              {selectedCategory === 'todos' ? 'Próximos Eventos' : `Eventos de ${selectedCategory}`}
+            </h2>
+            <Link href="/eventos" className={styles.seeAll}>
+              <span>Ver todos</span>
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          <div className={styles.grid}>
+            {loading ? (
+              Array(6).fill(0).map((_, idx) => <div key={idx} className={`${styles.skeletonCard} glass`}></div>)
+            ) : filteredEvents.length > 0 ? (
+              filteredEvents.map(event => (
+                <EventCard key={event.id} event={event} />
+              ))
+            ) : (
+              <div className={`${styles.noEvents} glass`}>
+                <p>No se encontraron eventos en esta categoría.</p>
+              </div>
+            )}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Seller Call to Action */}
+      <section className={styles.ctaSection}>
+        <div className="grid-container">
+          <div className={`${styles.ctaBox} glass`}>
+            <div className={styles.ctaGlow}></div>
+            <div className={styles.ctaContent}>
+              <h2>¿Tienes boletos que no vas a usar?</h2>
+              <p>
+                Publícalos en REVENTA gratis. Es seguro, rápido y tú decides el precio. Únete a miles de fans que venden de forma segura.
+              </p>
+              <Link href="/vender" className="btn btn-secondary">
+                Poner Boletos a la Venta
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

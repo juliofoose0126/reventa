@@ -1,0 +1,73 @@
+.header {
+  padding: 60px 0 30px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 40px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.titleRow h1 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.icon {
+  color: var(--secondary);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.resultsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.skeletonCard {
+  aspect-ratio: 16 / 15;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.noResults {
+  grid-column: 1 / -1;
+  padding: 80px 20px;
+  text-align: center;
+  border-radius: 16px;
+  max-width: 500px;
+  margin: 40px auto 0;
+}
+
+.noResults h3 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.noResults p {
+  color: var(--text-secondary);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}
+
+@media (max-width: 768px) {
+  .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+  .titleRow h1 {
+    font-size: 1.6rem;
+  }
+}
