@@ -98,7 +98,7 @@ export default function VenderPage() {
         <div className={`${styles.authRequired} glass`}>
           <AlertCircle size={40} className={styles.alertIcon} />
           <h2>Inicia sesión para vender boletos</h2>
-          <p>Necesitas estar registrado y haber iniciado sesión para publicar y vender boletos en REVENTA.</p>
+          <p>Necesitas estar registrado y haber iniciado sesión para publicar y vender boletos en BOLETOS-YA.</p>
           <div className={styles.authButtons}>
             <Link href="/login" className="btn btn-secondary">
               Iniciar Sesión

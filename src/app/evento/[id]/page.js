@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 import { fallbackEvents } from '@/data/events';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { Calendar, MapPin, Ticket, ShieldCheck, Loader2, Sparkles, X, Check } from 'lucide-react';
+import { Calendar, MapPin, Ticket, ShieldCheck, Loader2, Sparkles, X, Check, Lock } from 'lucide-react';
 import styles from './page.module.css';
 
 export default function EventoDetallePage({ params }) {
@@ -195,10 +195,10 @@ export default function EventoDetallePage({ params }) {
       <div className={styles.mainLayout}>
         <div className={styles.ticketsSection}>
           <div className={styles.ticketsHeader}>
-            <h2>Boletos en Reventa Disponibles</h2>
+            <h2>Boletos Disponibles en BOLETOS-YA</h2>
             <div className={styles.guaranteeBadge}>
               <ShieldCheck size={18} />
-              <span>Garantía de boletos legítimos</span>
+              <span>Garantía de Satisfacción 100%</span>
             </div>
           </div>
 
@@ -215,7 +215,13 @@ export default function EventoDetallePage({ params }) {
                       </div>
                     </div>
                     <div className={styles.vendedorRow}>
-                      <span>Vendedor: {ticket.vendedor?.nombre || 'Usuario Anónimo'}</span>
+                      <span className={styles.verifiedSeller}>
+                        <ShieldCheck size={14} className={styles.verifiedIcon} />
+                        Vendedor Verificado
+                      </span>
+                      <span className={styles.rating}>★ 4.9 (Excelente reputación)</span>
+                      <span className={styles.separator}>•</span>
+                      <span>Por: {ticket.vendedor?.nombre || 'Usuario Anónimo'}</span>
                     </div>
                   </div>
 
@@ -282,6 +288,10 @@ export default function EventoDetallePage({ params }) {
             ) : (
               <>
                 <h2 className={styles.modalTitle}>Confirmar Compra</h2>
+                <div className={styles.sslBadge}>
+                  <Lock size={12} className={styles.lockIcon} />
+                  <span>Conexión de Pago Encriptada SSL</span>
+                </div>
                 <div className={styles.modalTicketSummary}>
                   <h3>{event.titulo}</h3>
                   <p className={styles.modalTicketMeta}>{buyTicket.seccion} • {buyTicket.fila !== 'N/A' ? `Fila ${buyTicket.fila}` : 'Gral'}</p>

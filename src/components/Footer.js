@@ -8,10 +8,10 @@ export default function Footer() {
       <div className={styles.container}>
         <div className={styles.aboutCol}>
           <Link href="/" className={styles.logo}>
-            RE<span>VENTA</span>
+            BOLETOS<span>-YA</span>
           </Link>
           <p className={styles.description}>
-            La plataforma de reventa de boletos más creativa y segura de México. Compra y vende entradas para tus eventos favoritos con total tranquilidad.
+            La plataforma de reventa de boletos más creativa, confiable y segura de México. Compra y vende entradas para tus eventos favoritos con garantía total de satisfacción.
           </p>
           <div className={styles.security}>
             <ShieldCheck size={20} className={styles.securityIcon} />
@@ -44,7 +44,7 @@ export default function Footer() {
           <ul>
             <li>
               <Mail size={16} />
-              <span>soporte@reventa.com.mx</span>
+              <span>soporte@boletos-ya.com.mx</span>
             </li>
             <li>
               <Phone size={16} />
@@ -71,7 +71,7 @@ export default function Footer() {
       
       <div className={styles.bottomBar}>
         <div className={styles.bottomContainer}>
-          <p>&copy; {new Date().getFullYear()} REVENTA. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} BOLETOS-YA. Todos los derechos reservados.</p>
           <div className={styles.bottomLinks}>
             <a href="#">Privacidad</a>
             <a href="#">Cookies</a>

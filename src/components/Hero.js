@@ -24,16 +24,16 @@ export default function Hero() {
 
       <div className={styles.content}>
         <div className={`${styles.badge} glass animate-fade-in`}>
-          <Sparkles size={14} className={styles.badgeIcon} />
-          <span>La Revolución de la Reventa de Boletos</span>
+          <Shield size={14} className={styles.badgeIcon} />
+          <span>Compra y Venta 100% Garantizada y Confiable</span>
         </div>
 
         <h1 className={styles.title}>
-          La forma más <span className={styles.gradientText}>creativa</span> y <span className={styles.glowText}>segura</span> de conseguir tus boletos
+          Encuentra tus entradas en <span className={styles.gradientText}>BOLETOS</span>-<span>YA</span>
         </h1>
         
         <p className={styles.subtitle}>
-          Compra con garantía del 100% o vende los boletos que te sobren en minutos. Sin complicaciones, con tecnología de punta.
+          La forma más rápida, segura y garantizada de conseguir tus boletos en México. Compra protegida al 100% o vende los boletos que te sobren en minutos.
         </p>
 
         <form onSubmit={handleSearch} className={`${styles.searchBox} glass`}>

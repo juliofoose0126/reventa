@@ -137,7 +137,7 @@ export default function Home() {
             <div className={styles.ctaContent}>
               <h2>¿Tienes boletos que no vas a usar?</h2>
               <p>
-                Publícalos en REVENTA gratis. Es seguro, rápido y tú decides el precio. Únete a miles de fans que venden de forma segura.
+                Publícalos en BOLETOS-YA gratis. Es seguro, rápido y tú decides el precio. Únete a miles de fans que venden de forma segura.
               </p>
               <Link href="/vender" className="btn btn-secondary">
                 Poner Boletos a la Venta

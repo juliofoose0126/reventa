@@ -33,6 +33,9 @@
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 1.8rem;
@@ -41,10 +44,21 @@
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
+.logoIcon {
+  color: var(--secondary);
+  filter: drop-shadow(0 0 8px var(--secondary-glow));
+  animation: pulseLogo 3s infinite ease-in-out;
+}
+
 .logo span {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@keyframes pulseLogo {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1) rotate(5deg); }
 }
 
 .nav {

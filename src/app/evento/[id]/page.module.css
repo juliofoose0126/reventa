@@ -167,6 +167,37 @@
   font-size: 0.8rem;
   color: var(--text-secondary);
   padding-left: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.verifiedSeller {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--success);
+  font-weight: 600;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.verifiedIcon {
+  color: var(--success);
+}
+
+.rating {
+  color: #fbbf24;
+  font-weight: 500;
+}
+
+.separator {
+  color: var(--text-muted);
 }
 
 .ticketPriceArea {
@@ -281,7 +312,27 @@
 
 .modalTitle {
   font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.sslBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--success);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
   margin-bottom: 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+.lockIcon {
+  color: var(--success);
 }
 
 .modalTicketSummary {

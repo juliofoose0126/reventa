@@ -24,7 +24,8 @@ export default function Header() {
       <div className={styles.container}>
         <div className={styles.leftSection}>
           <Link href="/" className={styles.logo}>
-            RE<span>VENTA</span>
+            <Ticket size={24} className={styles.logoIcon} />
+            BOLETOS<span>-YA</span>
           </Link>
           <nav className={styles.nav}>
             <Link href="/eventos" className={styles.navLink}>
