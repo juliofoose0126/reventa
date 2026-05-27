@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, use } from 'react';
+import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import { fallbackEvents } from '@/data/events';
 import { useAuth } from '@/context/AuthContext';
@@ -171,8 +172,14 @@ export default function EventoDetallePage({ params }) {
     <div className="grid-container">
       {/* Event Header Banner */}
       <div className={`${styles.banner} glass`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={event.imagen_url} alt={event.titulo} className={styles.bannerImg} />
+        <Image 
+          src={event.imagen_url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=600&auto=format&fit=crop'} 
+          alt={event.titulo} 
+          fill
+          priority
+          sizes="100vw"
+          className={styles.bannerImg} 
+        />
         <div className={styles.bannerOverlay}></div>
         <div className={styles.bannerContent}>
           <span className={`badge badge-${event.categoria}`}>{event.categoria}</span>

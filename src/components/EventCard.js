@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, MapPin, Ticket } from 'lucide-react';
 import styles from './EventCard.module.css';
 
@@ -18,8 +19,14 @@ export default function EventCard({ event }) {
   return (
     <div className={`${styles.card} glass ${destacado ? styles.destacado : ''}`}>
       <div className={styles.imageWrapper}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={imagen_url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=600&auto=format&fit=crop'} alt={titulo} className={styles.image} />
+        <Image 
+          src={imagen_url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=600&auto=format&fit=crop'} 
+          alt={titulo} 
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className={styles.image}
+          loading="lazy"
+        />
         <span className={`badge badge-${categoria} ${styles.badge}`}>
           {categoria}
         </span>
