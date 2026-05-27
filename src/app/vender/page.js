@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { fallbackEvents } from '@/data/events';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -28,6 +28,12 @@ export default function VenderPage() {
 
   useEffect(() => {
     const fetchEvents = async () => {
+      if (!isSupabaseConfigured) {
+        setEvents(fallbackEvents);
+        setLoading(false);
+        return;
+      }
+      
       try {
         const { data, error } = await supabase
           .from('events')

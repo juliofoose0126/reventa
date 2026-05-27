@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState, use } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { fallbackEvents } from '@/data/events';
 import EventCard from '@/components/EventCard';
 import { Search } from 'lucide-react';
@@ -19,6 +19,17 @@ export default function BuscarPage({ searchParams }) {
       setLoading(true);
       if (!query.trim()) {
         setResults([]);
+        setLoading(false);
+        return;
+      }
+
+      if (!isSupabaseConfigured) {
+        const matched = fallbackEvents.filter(e => 
+          e.titulo.toLowerCase().includes(query.toLowerCase()) || 
+          e.descripcion.toLowerCase().includes(query.toLowerCase()) ||
+          e.lugar.toLowerCase().includes(query.toLowerCase())
+        );
+        setResults(matched);
         setLoading(false);
         return;
       }

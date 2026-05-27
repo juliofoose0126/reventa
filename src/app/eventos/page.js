@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { fallbackEvents } from '@/data/events';
 import EventCard from '@/components/EventCard';
 import { Music, Trophy, Theater, Disc, Compass } from 'lucide-react';
@@ -14,6 +14,12 @@ export default function EventosPage() {
 
   useEffect(() => {
     const fetchEvents = async () => {
+      if (!isSupabaseConfigured) {
+        setEvents(fallbackEvents);
+        setLoading(false);
+        return;
+      }
+      
       try {
         const { data, error } = await supabase
           .from('events')

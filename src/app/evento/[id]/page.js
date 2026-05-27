@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState, use } from 'react';
 import Image from 'next/image';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { fallbackEvents } from '@/data/events';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -34,6 +34,14 @@ export default function EventoDetallePage({ params }) {
   useEffect(() => {
     const fetchEventAndTickets = async () => {
       setLoading(true);
+      
+      if (!isSupabaseConfigured) {
+        setEvent(fallbackEvents.find(e => e.id === eventId));
+        setTickets(fallbackTickets);
+        setLoading(false);
+        return;
+      }
+      
       try {
         // 1. Fetch Event
         let eventData = null;

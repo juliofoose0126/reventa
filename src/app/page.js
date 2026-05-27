@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { fallbackEvents } from '@/data/events';
 import Hero from '@/components/Hero';
 import EventCard from '@/components/EventCard';
@@ -15,6 +15,12 @@ export default function Home() {
 
   useEffect(() => {
     const fetchEvents = async () => {
+      if (!isSupabaseConfigured) {
+        setEvents(fallbackEvents);
+        setLoading(false);
+        return;
+      }
+      
       try {
         const { data, error } = await supabase
           .from('events')

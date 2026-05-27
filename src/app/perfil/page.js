@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState, use } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { User, Ticket, ShoppingBag, Calendar, MapPin, Loader2, Sparkles } from 'lucide-react';
@@ -34,6 +34,12 @@ export default function PerfilPage({ searchParams }) {
 
     const fetchUserData = async () => {
       setDataLoading(true);
+      
+      if (!isSupabaseConfigured) {
+        setDataLoading(false);
+        return;
+      }
+      
       try {
         // 1. Fetch Compras (Transactions)
         const { data: dbCompras, error: comprasError } = await supabase
